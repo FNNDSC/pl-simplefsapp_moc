@@ -22,7 +22,7 @@ A demo/testing simplefsapp for the MOC compute environment.
 Synopsis
 --------
 
-.. code:: bash
+.. code::
 
     python simplefsapp_moc.py                                       \
         [-v <level>] [--verbosity <level>]                          \
