@@ -109,7 +109,7 @@ class Simplefsapp_moc(ChrisApp):
     TYPE                    = 'fs'
     DESCRIPTION             = 'A demo/testing simplefsapp for the MOC compute environment.'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.0'
+    VERSION                 = '1.0.2'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
