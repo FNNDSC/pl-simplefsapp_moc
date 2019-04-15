@@ -11,9 +11,14 @@
 
 import  sys
 import  os
+import  time
 
 # import the Chris app superclass
 from    chrisapp.base   import ChrisApp
+
+def touch(path):
+    with open(path, 'a'):
+        os.utime(path, None)
 
 Gstr_title = """
 
@@ -43,13 +48,15 @@ Gstr_synopsis = """
             [--version]                                                 \\
             [--man]                                                     \\
             [--meta]                                                    \\
+            [--sleepLength <sleepLength>]                               \\
+
             <outputDir> 
 
     BRIEF EXAMPLE
 
         * Bare bones execution
 
-            mkdir in out && chmod 777 out
+            mkdir out && chmod 777 out
             python simplefsapp_moc.py out
 
     DESCRIPTION
@@ -57,6 +64,10 @@ Gstr_synopsis = """
         `simplefsapp_moc.py` is a testing/demo application for an FS-type
         application on the Massachusetts Open Cloud (MOC) remote computing
         environment.
+
+        The application simply "touches" new files in its output directory
+        which are the names of the files in the '--dir <path>' target 
+        directory.
 
     ARGS
 
@@ -71,6 +82,17 @@ Gstr_synopsis = """
 
         [--meta]
         If specified, print plugin meta data.
+
+        [--dir <path>]
+        A directory on the process filesystem (if run outside ChRIS) or a 
+        path inside openstorage (if run within ChRIS) to examine.
+
+        [--sleepLength <sleepLength>]
+        If specified, sleep for <sleepLength> seconds before starting
+        script processing. This is to simulate a possibly long running 
+        process.
+
+
 
 """
 
@@ -87,7 +109,7 @@ class Simplefsapp_moc(ChrisApp):
     TYPE                    = 'fs'
     DESCRIPTION             = 'A demo/testing simplefsapp for the MOC compute environment.'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '0.1'
+    VERSION                 = '1.0.0'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -159,6 +181,19 @@ class Simplefsapp_moc(ChrisApp):
                             action      = 'store_true',
                             optional    = True,
                             default     = False)
+        self.add_argument('--dir', 
+                            dest        = 'dir', 
+                            type        = ChrisApp.path, 
+                            default     = './',
+                            optional    = True, 
+                            help        = 'directory to examine')
+        self.add_argument('--sleepLength',
+                           dest         = 'sleepLength',
+                           type         = str,
+                           optional     = True,
+                           help         = 'time to sleep before performing plugin action',
+                           default      = '0')
+
 
     def run(self, options):
         """
@@ -178,6 +213,21 @@ class Simplefsapp_moc(ChrisApp):
 
         print(Gstr_title)
         print('Version: %s' % Simplefsapp_moc.VERSION)
+        print('Sleeping for %s' % options.sleepLength)
+        time.sleep(int(options.sleepLength))
+
+        str_outFile = os.path.join(options.outputdir, 'out.txt')
+        print(os.system('ls ' + options.dir + '>' + str_outFile))
+
+        # Create a 'dummy' listing of empty files mirroring the target dir listing
+        with open(str_outFile) as f:
+            l_ls    = f.readlines()
+        print(l_ls)
+        l_ls = map(str.strip, l_ls)
+        for str_file in l_ls:
+            str_fullPath    = os.path.join(options.outputdir, str_file)
+            print('touching file... %s' % str_fullPath)
+            touch(str_fullPath)
 
 # ENTRYPOINT
 if __name__ == "__main__":
