@@ -27,7 +27,7 @@
 FROM fnndsc/ubuntu-python3:latest
 MAINTAINER fnndsc "dev@babymri.org"
 
-ENV APPROOT="/usr/src/simplefsapp_moc"  VERSION="0.1"
+ENV APPROOT="/usr/src/simplefsapp_moc"  VERSION="1.0.3"
 COPY ["simplefsapp_moc", "${APPROOT}"]
 COPY ["requirements.txt", "${APPROOT}"]
 

@@ -1,5 +1,8 @@
+
 import sys
 import os
+
+
 # Make sure we are running python3.5+
 if 10 * sys.version_info[0]  + sys.version_info[1] < 35:
     sys.exit("Sorry, only Python 3.5+ is supported.")
@@ -15,7 +18,7 @@ def readme():
 
 setup(
       name             =   'simplefsapp_moc',
-      version          =   '1.0.2',
+      version          =   '1.0.3',
       description      =   'A demo/testing simplefsapp for the MOC compute environment.', 
       long_description =   readme(),
       author           =   'FNNDSC',
