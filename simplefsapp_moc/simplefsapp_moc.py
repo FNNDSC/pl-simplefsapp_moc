@@ -9,12 +9,11 @@
 #                        dev@babyMRI.org
 #
 
-import  sys
-import  os
-import  time
-
+import os
+import time
 # import the Chris app superclass
-from    chrisapp.base   import ChrisApp
+from chrisapp.base import ChrisApp
+
 
 def touch(path):
     with open(path, 'a'):
@@ -96,6 +95,7 @@ Gstr_synopsis = """
 
 """
 
+
 class Simplefsapp_moc(ChrisApp):
     """
     A demo/testing simplefsapp for the MOC compute environment..
@@ -109,7 +109,7 @@ class Simplefsapp_moc(ChrisApp):
     TYPE                    = 'fs'
     DESCRIPTION             = 'A demo/testing simplefsapp for the MOC compute environment.'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.2'
+    VERSION                 = '1.0.3'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -133,54 +133,11 @@ class Simplefsapp_moc(ChrisApp):
     # flag. Note also that all file paths are relative to the system specified
     # output directory.
     OUTPUT_META_DICT = {}
- 
-    def manPage_show(self):
-        """
-        Print some quick help.
-        """
-        print(Gstr_synopsis)
-
-    def metaData_show(self):
-        """
-        Print the plugin meta data
-        """
-        l_metaData  = dir(self)
-        l_classVar  = [x for x in l_metaData if x.isupper() ]
-        for str_var in l_classVar:
-            str_val = getattr(self, str_var)
-            print("%20s: %s" % (str_var, str_val))
 
     def define_parameters(self):
         """
         Define the CLI arguments accepted by this plugin app.
         """
-        self.add_argument("-v", "--verbosity",
-                            help        = "verbosity level for app",
-                            type        = str,
-                            dest        = 'verbosity',
-                            optional    = True,
-                            default     = "0")
-        self.add_argument('--man',
-                            help        = 'if specified, print man page',
-                            type        = bool,
-                            dest        = 'b_man',
-                            action      = 'store_true',
-                            optional    = True,
-                            default     = False)
-        self.add_argument('--meta',
-                            help        = 'if specified, print plugin meta data',
-                            type        = bool,
-                            dest        = 'b_meta',
-                            action      = 'store_true',
-                            optional    = True,
-                            default     = False)
-        self.add_argument('--version',
-                            help        = 'if specified, print version number',
-                            type        = bool,
-                            dest        = 'b_version',
-                            action      = 'store_true',
-                            optional    = True,
-                            default     = False)
         self.add_argument('--dir', 
                             dest        = 'dir', 
                             type        = ChrisApp.path, 
@@ -194,23 +151,10 @@ class Simplefsapp_moc(ChrisApp):
                            help         = 'time to sleep before performing plugin action',
                            default      = '0')
 
-
     def run(self, options):
         """
         Define the code to be run by this plugin app.
         """
-        if options.b_man:
-            self.manPage_show()
-            sys.exit(0)
-
-        if options.b_meta:
-            self.metaData_show()
-            sys.exit(0)
-
-        if options.b_version:
-            print('Plugin Version: %s' % Simplefsapp_moc.VERSION)
-            sys.exit(0)
-
         print(Gstr_title)
         print('Version: %s' % Simplefsapp_moc.VERSION)
         print('Sleeping for %s' % options.sleepLength)
@@ -228,6 +172,13 @@ class Simplefsapp_moc(ChrisApp):
             str_fullPath    = os.path.join(options.outputdir, str_file)
             print('touching file... %s' % str_fullPath)
             touch(str_fullPath)
+
+    def show_man_page(self):
+        """
+        Print the app's man page.
+        """
+        print(Gstr_synopsis)
+
 
 # ENTRYPOINT
 if __name__ == "__main__":
