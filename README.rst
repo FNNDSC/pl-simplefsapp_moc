@@ -86,11 +86,11 @@ and run with
 
     simplefsapp_moc.py --man /tmp
 
-to get inline help. The app should also understand being called with only two positional arguments
+to get inline help. The app should also understand being called with a single positional argument
 
 .. code:: bash
 
-    simplefsapp_moc.py /destination/directory
+    simplefsapp_moc.py /tmp
 
 
 Using ``docker run``
