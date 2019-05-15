@@ -103,7 +103,7 @@ Now, prefix all calls with
 .. code:: bash
 
     docker run --rm -v $(pwd)/out:/outgoing                             \
-            fnndsc/pl-simplefsapp_moc simplefsapp_moc.py                        \
+            fnndsc/pl-simplefsapp_moc simplefsapp_moc.py                \
 
 Thus, getting inline help is:
 
@@ -111,7 +111,7 @@ Thus, getting inline help is:
 
     mkdir in out && chmod 777 out
     docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-            fnndsc/pl-simplefsapp_moc simplefsapp_moc.py                        \
+            fnndsc/pl-simplefsapp_moc simplefsapp_moc.py                \
             --man                                                       \
             /outgoing
 
