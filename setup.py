@@ -18,7 +18,7 @@ def readme():
 
 setup(
       name             =   'simplefsapp_moc',
-      version          =   '1.0.3',
+      version          =   '1.0.4',
       description      =   'A demo/testing simplefsapp for the MOC compute environment.', 
       long_description =   readme(),
       author           =   'FNNDSC',
