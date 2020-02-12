@@ -141,8 +141,7 @@ class Simplefsapp_moc(ChrisApp):
         self.add_argument('--dir', 
                             dest        = 'dir', 
                             type        = ChrisApp.path, 
-                            default     = './',
-                            optional    = True, 
+                            optional    = False, 
                             help        = 'directory to examine')
         self.add_argument('--sleepLength',
                            dest         = 'sleepLength',
